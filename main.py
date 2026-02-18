@@ -30,6 +30,9 @@ def ol_fill(pt):
                 options_list.append(value)
 
 '''
+# The following was replaced with ol_fill() function
+# I'm leaving it here so I can remember my learning process
+
 ### START LOOP HERE ###
 # Create options list with relevant data 
 while len(scramble_list) < 26:

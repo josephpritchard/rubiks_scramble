@@ -1,12 +1,12 @@
 import random
 
 master_dict = {
-        'Right': ("R", "R'", "R2", "R2'"),
-        'Left': ("L", "L'", "L2", "L2'"),
-        'Up': ("U", "U'", "U2", "U2'"),
-        'Down': ("D", "D'", "D2", "D2'"),
-        'Front': ("F", "F'", "F2", "F2'"),
-        'Back': ("B", "B'", "B2", "B2'")
+        'Right': ["R", "R'", "R2", "R2'"],
+        'Left': ["L", "L'", "L2", "L2'"],
+        'Up': ["U", "U'", "U2", "U2'"],
+        'Down': ["D", "D'", "D2", "D2'"],
+        'Front': ["F", "F'", "F2", "F2'"],
+        'Back': ["B", "B'", "B2", "B2'"]
         }
 
 ## Review Master Dictionary
@@ -17,18 +17,19 @@ master_dict = {
 ## Print list
 
 options_list = []
-previous_turn = None
+previous_turn = "Start"
 scramble_list = []
 
-# for loop function for appending values to the options list
-# options list append
-def ola():
-    for value in v:
-        options_list.append(value)
-
 # new function, pt means previous_turn
+# compares first letter of pt and value before adding the value to the options list
+# this matches any letter move with any of its own letter moves (R R' R2 R2')
 def ol_fill(pt):
-    pass
+    for k, v in master_dict.items():
+        for value in v:
+            if pt[0] != value[0]:
+                options_list.append(value)
+
+'''
 ### START LOOP HERE ###
 # Create options list with relevant data 
 while len(scramble_list) < 26:
@@ -38,8 +39,8 @@ while len(scramble_list) < 26:
                 options_list.append(value)
     elif 'R' in previous_turn:
         for k, v in master_dict.items():
-            if k != 'Right':
-                for value in v:
+            for value in v:
+                if 'R' not in value:
                     options_list.append(value)
     elif 'L' in previous_turn:
         for k, v in master_dict.items():
@@ -56,7 +57,10 @@ while len(scramble_list) < 26:
             if k != 'Up' and k != 'Down':
                 for value in v:
                     options_list.append(value)
+'''
 
+while len(scramble_list) < 26:
+    ol_fill(previous_turn)
     # Choose next turn from options list
     # rn stands for random number
     range_end = len(options_list) - 1
@@ -66,10 +70,13 @@ while len(scramble_list) < 26:
         rn = 0
     if rn > range_end:
         rn = range_end
+    # choose next turn with rn and add to scramble list
     next_turn = options_list[rn]
     scramble_list.append(next_turn)
+    # make pt equal to next_turn for the next loop cycle
     previous_turn = next_turn
+    # reset options list and range end
     options_list = []
     range_end = None
 
-print(f"Scramble list is: {scramble_list}")
+print(*scramble_list)
